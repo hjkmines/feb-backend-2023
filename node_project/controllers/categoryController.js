@@ -1,53 +1,90 @@
+const Category = require('../models/Category');
+
 // For '/category' endpoints
-const getCategories = (req, res, next) => {
+const getCategories = async (req, res, next) => {
     // query parameter
     if (Object.keys(req.query).length) {
         const category = req.query.category
         console.log(`Searching for category: ${category}`)
     }
 
-    res
-    .status(200)
-    .setHeader('Content-Type', 'application/json')
-    .json({ message: 'You Hit Me! Show me all the categories!' })
+    try {
+        const categories = await Category.find()
+
+        res
+        .status(200)
+        .setHeader('Content-Type', 'application/json')
+        .json(categories)
+    } catch (err) {
+        next(err)
+    }
 }
 
-const createCategory = (req, res, next) => {
-    res
-    .status(201)
-    .setHeader('Content-Type', 'application/json')
-    .json({ message: `Create category with category name of 
-    ${req.body.categoryName} and gender ${req.body.gender}
-    ` })
+const createCategory = async (req, res, next) => {
+    try {
+        const category = await Category.create(req.body)
+
+        res
+        .status(201)
+        .setHeader('Content-Type', 'application/json')
+        .json(category)
+    } catch (err) {
+        next(err)
+    }
 }
 
-const deleteCategories = (req, res, next) => {
-    res
-    .status(200)
-    .setHeader('Content-Type', 'application/json')
-    .json({ message: 'Deleting the categories!' })
+const deleteCategories = async (req, res, next) => {
+    try {
+        const deletedCategories = await Category.deleteMany()
+        
+        res
+        .status(200)
+        .setHeader('Content-Type', 'application/json')
+        .json(deletedCategories)
+    } catch (err) {
+        next(err)
+    }
+
 }
 
 // For '/category/:categoryId/'
-const getCategory = (req, res, next) => {
-    res
-    .status(200)
-    .setHeader('Content-Type', 'application/json')
-    .json({ message: `Show me the category with cateogry Id of ${req.params.categoryId}` })
+const getCategory = async (req, res, next) => {
+    try {
+        const category = await Category.findById(req.params.categoryId)
+
+        res
+        .status(200)
+        .setHeader('Content-Type', 'application/json')
+        .json(category)
+    } catch (err) {
+        next(err)
+    }
 }
 
-const putCategory = (req, res, next) => {
-    res
-    .status(200)
-    .setHeader('Content-Type', 'application/json')
-    .json({ message: `Update the category with cateogry Id of ${req.params.categoryId}` })
+const putCategory = async (req, res, next) => {
+    try {
+        const category = await Category.findByIdAndUpdate(req.params.categoryId, req.body, { new: true })
+
+        res
+        .status(200)
+        .setHeader('Content-Type', 'application/json')
+        .json(category)
+    } catch (err) {
+        next(err)
+    }
 }
 
-const deleteCategory = (req, res, next) => {
-    res
-    .status(200)
-    .setHeader('Content-Type', 'application/json')
-    .json({ message: `Delete the category with cateogry Id of ${req.params.categoryId}` })
+const deleteCategory = async (req, res, next) => {
+    try {
+        const deletedCategory = await Category.findByIdAndDelete(req.params.categoryId)
+
+        res
+        .status(200)
+        .setHeader('Content-Type', 'application/json')
+        .json(deletedCategory)
+    } catch (err) {
+        next(err)
+    }
 }
 
 module.exports = {
