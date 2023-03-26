@@ -2,19 +2,23 @@ const User = require('../models/User');
 // For '/user' endpoint 
 
 const getUsers = async (res, req, next) => {
+
+    const filter = {}
+    const options = {}
     if (Object.keys(req.query).length) {
         const {
             gender, 
-            userName
+            userName, 
+            limit, 
+            sortByUserName
         } = req.query
 
-        const filter = []; 
+        if (gender) filter.gender = true
+        if (userName) filter.userName = true
 
-        if (gender) filter.push(gender)
-        if (userName) filter.push(userName)
-
-        for (const query of filter) {
-            console.log(`Searching item by ${query}`)
+        if (limit) options.limit = limit; 
+        if (sortByUserName) options.sort = {
+            userName: sortByUserName
         }
     }
 

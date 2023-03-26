@@ -6,7 +6,7 @@ const CategorySchema = new Schema({
         type: String, 
         required: true, 
         unique: true, 
-        maxLength: 25
+        maxLength: 5
     },
     gender: {
         type: String, 
@@ -20,6 +20,16 @@ const CategorySchema = new Schema({
     }
 }, {
     timestamps: true
+})
+
+CategorySchema.pre('save', function(next) {
+    this.gender = this.gender.toUpperCase()
+
+    next()
+})
+
+CategorySchema.post('save', function(next) {
+    this.gender = this.gender.toLowerCase()
 })
 
 module.exports = mongoose.model('Category', CategorySchema);

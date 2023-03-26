@@ -3,13 +3,27 @@ const Category = require('../models/Category');
 // For '/category' endpoints
 const getCategories = async (req, res, next) => {
     // query parameter
+    const filter = {}; 
+    const options = {}; 
     if (Object.keys(req.query).length) {
-        const category = req.query.category
-        console.log(`Searching for category: ${category}`)
+        const {
+            sortByCategory, 
+            categoryName, 
+            gender, 
+            limit
+        } = req.query
+        
+        if (categoryName) filter.categoryName = true; 
+        if (gender) filter.gender = true; 
+
+        if (limit) options.limit = limit; 
+        if (sortByCategory) options.sort = {
+            categoryName: sortByCategory
+        }
     }
 
     try {
-        const categories = await Category.find()
+        const categories = await Category.find({}, filter, options)
 
         res
         .status(200)

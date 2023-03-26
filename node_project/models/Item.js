@@ -1,6 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema; 
 
+const RatingSchema = new Schema({
+    rating: {
+        type: Number, 
+        min: 1, 
+        max: 100, 
+        required: true
+    }, 
+    text: {
+        type: String, 
+        maxLength: [500, 'Can not be more than 500 characters'],
+        required: true
+    }, 
+    author: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User'
+    }
+})
+
 const ItemSchema = new Schema({
     itemName: {
         type: String, 
@@ -38,14 +56,12 @@ const ItemSchema = new Schema({
     sizes: {
         type: [String], 
         required: true
-    }
+    }, 
+    ratings: [RatingSchema]
 }, {
     timestamps: true
 })
 
 module.exports = mongoose.model('Item', ItemSchema)
-
-
-
 
 
