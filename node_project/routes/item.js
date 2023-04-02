@@ -9,7 +9,11 @@ const {
     deleteItem, 
     getItemRatings, 
     postItemRating, 
-    deleteItemRatings
+    deleteItemRatings, 
+    getItemRating, 
+    updateItemRating, 
+    deleteItemRating, 
+    postItemImage
 } = require('../controllers/itemController')
 
 router.route('/')
@@ -26,5 +30,13 @@ router.route('/:itemId/ratings')
       .get(getItemRatings)
       .post(postItemRating)
       .delete(deleteItemRatings)
+
+router.route('/:itemId/image')
+      .post(postItemImage)
+
+router.route('/:itemId/ratings/:ratingId')
+      .get(getItemRating)
+      .put(updateItemRating)
+      .delete(deleteItemRating)
 
 module.exports = router; 

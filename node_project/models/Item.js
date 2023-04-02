@@ -57,7 +57,10 @@ const ItemSchema = new Schema({
         type: [String], 
         required: true
     }, 
-    ratings: [RatingSchema]
+    ratings: [RatingSchema], 
+    image: {
+        type: String
+    }
 }, {
     timestamps: true
 })

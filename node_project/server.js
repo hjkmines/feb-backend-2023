@@ -8,6 +8,8 @@ const cors = require('cors')
 const logger = require('./middlewares/logger'); 
 const errorHandler = require('./middlewares/error')
 const connectDB = require('./config/db');
+const fileupload = require('express-fileupload');
+const cookieParser = require('cookie-parser')
 
 dotenv.config({ path: './config/config.env' }); 
 
@@ -20,7 +22,8 @@ app.use(bodyParser.json())
 app.use(cors({
     origin: '*'
 }))
-
+app.use(fileupload())
+app.use(cookieParser())
 app.use(logger)
 app.use(errorHandler)
 app.use('/category', category)
