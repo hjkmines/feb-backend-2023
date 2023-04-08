@@ -159,7 +159,7 @@ const deleteItemRatings = async (req, res, next) => {
 const getItemRating = async (req, res, next) => {
     try {
         const item = await Item.findById(req.params.itemId);
-        let rating = item.ratings.find(rating => (req.params.ratingId).equals(rating._id))
+        let rating = item.ratings.find(rating => (rating._id).equals(req.params.ratingId))
 
         if (!rating) rating = { msg: `No rating found with id: ${req.params.ratingId}` }
 
