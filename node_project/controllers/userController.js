@@ -1,7 +1,7 @@
 const User = require('../models/User');
 // For '/user' endpoint 
 
-const getUsers = async (res, req, next) => {
+const getUsers = async (req, res, next) => {
 
     const filter = {}
     const options = {}

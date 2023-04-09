@@ -13,7 +13,7 @@ const adminValidator = require('../middlewares/utils/validators');
 const protectedRoute = require('../middlewares/auth'); 
 
 router.route('/')
-      .get(adminValidator, protectedRoute, getUsers)
+      .get(protectedRoute, adminValidator, getUsers)
       .post(postUser)
       .delete(protectedRoute, deleteUsers)
 
