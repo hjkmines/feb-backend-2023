@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Node.js Engineering Course",
   "main": "server.js",
+  "engines" : { 
+    "node" : ">=14.20.1" 
+  },
   "scripts": {
     "start": "nodemon server"
   },
